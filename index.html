@@ -27,7 +27,7 @@
     --ink:#f4f1e8; --dim:#9b94ad;
     /* chrome tint — follows the active slide */
     --tint:var(--gold); --tint-soft:rgba(255,209,89,.18); --tint-line:rgba(255,209,89,.5);
-    --header-h:64px; --dock-h:44px; --marq-h:18px; --chrome-b:calc(var(--dock-h) + var(--marq-h));
+    --header-h:64px; --dock-h:54px; --marq-h:26px; --chrome-b:calc(var(--dock-h) + var(--marq-h));
     --ease:cubic-bezier(.22,1,.36,1);
     --pane-h:100vh;
   }
@@ -106,7 +106,7 @@
   #xpBar{ height:100%; width:2%; border-radius:99px;
     background:linear-gradient(90deg,var(--tint),#fff3c4); box-shadow:0 0 12px var(--tint-soft);
     transition:width .6s var(--ease), background .5s; }
-  .hud-actions{ display:flex; align-items:center; gap:.35rem; flex:none; }
+  .hud-actions{ display:flex; align-items:center; gap:.35rem; flex:none; margin-left:auto; }
   .icon-btn{ width:44px; height:44px; display:grid; place-items:center; flex:none; cursor:pointer;
     border:1px solid var(--tint-line); border-radius:13px; background:rgba(0,0,0,.38); color:var(--tint);
     font-family:'Rajdhani',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.1em;
@@ -347,7 +347,7 @@
     background:rgba(3,3,6,.72); transition:border-color .5s; }
   .marquee{ display:flex; gap:2rem; white-space:nowrap; height:100%; align-items:center;
     font-family:'Orbitron',sans-serif; font-size:.54rem; letter-spacing:.24em; color:var(--dim);
-    animation:marq 34s linear infinite; }
+    animation:marq 14s linear infinite; }
   @keyframes marq{ to{ transform:translateX(-50%); } }
 
   /* ── BOTTOM DOCK ── */
@@ -421,8 +421,6 @@
   .switch input:checked + .track{ background:rgba(255,209,89,.18); border-color:rgba(255,209,89,.7); box-shadow:0 0 14px rgba(255,209,89,.3); }
   .switch input:checked + .track:before{ transform:translateX(22px); background:var(--gold); box-shadow:0 0 10px rgba(255,209,89,.8); }
   .switch input:focus-visible + .track{ outline:2px solid var(--cyan); outline-offset:2px; }
-  input[type=range].drone-range{ width:100%; accent-color:var(--pink); margin-top:.55rem; height:1.6rem; }
-  input[type=range].drone-range:disabled{ opacity:.4; }
 
   /* ── COMPACT MOBILE FIT (merged responsive density + desktop scaling) ── */
   @media(max-width:899px){
@@ -516,8 +514,7 @@
 
   /* ── SHORT VIEWPORTS ── */
   @media(max-height:720px){
-    :root{ --header-h:58px; --marq-h:0px; }
-    .marquee-band{ display:none; }
+    :root{ --header-h:58px; --marq-h:24px; }
     .slide-inner{ gap:.6rem; }
     .hero-title{ font-size:clamp(1.8rem,8.2vw,3rem); }
     .hero-body{ font-size:.94rem; line-height:1.5; }
@@ -528,6 +525,185 @@
     .note-card{ display:none; }
     .swipe-hint{ display:none; }
   }
+
+
+  /* ── COMPONENT LINEUP slide (Carmen, 2026-10-21) ── */
+  .lineup-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.55rem; width:100%; }
+  .lineup-cell{ background:rgba(10,8,18,.55); border:1px solid rgba(255,255,255,.08); border-radius:16px;
+    padding:.5rem; display:flex; flex-direction:column; gap:.35rem; min-width:0; }
+  .lineup-stage{ position:relative; z-index:0; flex:1; display:grid; place-items:center; min-height:118px;
+    border-radius:12px; background:radial-gradient(ellipse at 50% 40%, rgba(0,229,255,.07), rgba(0,0,0,.28) 78%); }
+  .lineup-cap{ font-family:'Rajdhani',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.12em;
+    color:var(--dim); text-align:center; line-height:1.35; }
+  .lineup-cap b{ color:#fff; }
+  .lineup-credit{ align-items:center; justify-content:center; text-align:center; gap:.55rem; }
+  .lineup-credit p{ margin:0; font-size:.8rem; line-height:1.45; color:#cfc9dd; font-weight:300; }
+  @media(min-width:900px){
+    .lineup-grid{ grid-template-columns:repeat(3,1fr); gap:.7rem; }
+    .lineup-stage{ min-height:186px; }
+  }
+  @media(max-width:899px) and (max-height:760px){ .lineup-stage{ min-height:100px; } }
+  @media(max-width:899px) and (max-height:680px){ .lineup-stage{ min-height:90px; } .lineup-cell{ padding:.4rem; } }
+
+  /* ── 1 · SPACE button (StealthWorm, spotty-horse-48) ── */
+  .u-space-btn{ display:flex; justify-content:center; align-items:center; min-width:12.5rem; width:auto; min-height:52px; padding:0 1.35rem;
+    overflow:hidden; background-size:300% 300%; cursor:pointer; backdrop-filter:blur(1rem);
+    border-radius:5rem; transition:.5s; animation:uGradient 5s ease infinite; position:relative;
+    border:double 4px transparent; background-origin:border-box; background-clip:content-box, border-box;
+    background-image:linear-gradient(#212121,#212121), linear-gradient(137.48deg,#ffdb3b 10%,#fe53bb 45%,#8f51ea 67%,#0044ff 87%); text-decoration:none; }
+  .u-space-btn strong{ z-index:2; font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:3px;
+    color:#fff; text-shadow:0 0 4px white; white-space:nowrap; }
+  .u-space-stars-wrap{ position:absolute; z-index:-1; width:100%; height:100%; overflow:hidden;
+    transition:.5s; backdrop-filter:blur(1rem); border-radius:5rem; }
+  .u-space-btn:hover .u-space-stars-wrap{ z-index:1; background-color:#212121; }
+  .u-space-btn:hover{ transform:scale(1.05); }
+  .u-space-btn:active{ border:double 4px #fe53bb; animation:none; }
+  .u-space-stars{ position:relative; background:transparent; width:200rem; height:200rem; }
+  .u-space-stars::after{ content:""; position:absolute; top:-10rem; left:-100rem; width:100%; height:100%;
+    animation:uStarRotate 90s linear infinite;
+    background-image:radial-gradient(#ffffff 1px, transparent 1%); background-size:50px 50px; }
+  .u-space-stars::before{ content:""; position:absolute; top:0; left:-50%; width:170%; height:500%;
+    animation:uStarDrift 60s linear infinite; opacity:.5;
+    background-image:radial-gradient(#ffffff 1px, transparent 1%); background-size:50px 50px; }
+  .u-space-glow{ position:absolute; display:flex; width:11.5rem; }
+  .u-space-circle{ width:100%; height:30px; filter:blur(2rem); animation:uPulse 4s infinite; z-index:-1; }
+  .u-space-circle:nth-of-type(1){ background:rgba(254,83,186,.636); }
+  .u-space-circle:nth-of-type(2){ background:rgba(142,81,234,.704); }
+  .u-space-btn:active .u-space-circle{ background:#fe53bb; }
+  @keyframes uGradient{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+  @keyframes uStarDrift{ from{transform:translateY(0)} to{transform:translateY(-135rem)} }
+  @keyframes uStarRotate{ from{transform:rotate(360deg)} to{transform:rotate(0)} }
+  @keyframes uPulse{ 0%{transform:scale(.75); box-shadow:0 0 0 0 rgba(0,0,0,.7)} 70%{transform:scale(1); box-shadow:0 0 0 10px rgba(0,0,0,0)} 100%{transform:scale(.75); box-shadow:0 0 0 0 rgba(0,0,0,0)} }
+  @media(min-width:900px){ .u-space-btn{ min-width:13.5rem; height:3.2rem; } .u-space-glow{ width:12.5rem; } }
+
+  /* ── 2 · Glow card (ilkhoeri, wet-mule-82) ── */
+  .u-mule{ --border:4px; --rounded:16px; --w-card:100%; --h-card:92px;
+    margin:0; width:var(--w-card); height:var(--h-card); max-width:100%; max-height:100%;
+    border-radius:var(--rounded); display:flex; align-items:center; justify-content:center;
+    position:relative; padding:var(--border); }
+  .u-mule::before, .u-mule::after{ content:""; z-index:-1; position:absolute; will-change:auto;
+    --size:calc(100%); width:var(--size); height:var(--size); min-width:var(--size); min-height:var(--size);
+    max-width:var(--size); max-height:var(--size); border-radius:var(--rounded); background-size:400% 400%;
+    animation:uBgSpin 3s linear 0s infinite normal none running;
+    background-image:radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+      radial-gradient(circle farthest-side at 100% 0, #5ddcff, transparent),
+      radial-gradient(circle farthest-side at 100% 100%, #3c67e3, transparent),
+      radial-gradient(circle farthest-side at 0 0, #4e00c2, #0000); }
+  .u-mule::after{ transition-property:color, background-color, border-color, text-decoration-color, fill, stroke,
+      opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function:cubic-bezier(.4,0,.2,1); transition-duration:.5s;
+    animation-delay:.5s; filter:blur(24px); opacity:.7; }
+  @keyframes uBgSpin{ 25%{background-position:right 20% bottom 40%} 75%{background-position:left 45% top 20%} }
+  .u-mule-points{ position:absolute; overflow:hidden; width:calc(100% - (var(--border) * 4));
+    height:calc(100% - (var(--border) * 4)); border-radius:calc(var(--rounded) - 4px);
+    pointer-events:none; z-index:80; }
+  .u-mule-points .u-mule-point{ --sz-point:4px; top:-8px; position:absolute;
+    animation:uFloatPts infinite ease-in-out; pointer-events:none; width:var(--sz-point); height:var(--sz-point);
+    background-color:#5ddcff; border-radius:9999px; }
+  @keyframes uFloatPts{ 0%{transform:translate(0,0)} 95%{opacity:0}
+    100%{opacity:0; transform:translate(calc(var(--h-card) / 1.75), calc(var(--h-card) / 1.5))} }
+  .u-mule-points .u-mule-point:nth-child(1){ left:10%; opacity:1; animation-duration:2.35s; animation-delay:.2s; }
+  .u-mule-points .u-mule-point:nth-child(2){ left:30%; opacity:.7; animation-duration:2.5s; animation-delay:.5s; }
+  .u-mule-points .u-mule-point:nth-child(3){ left:25%; opacity:.8; animation-duration:2.2s; animation-delay:.1s; }
+  .u-mule-points .u-mule-point:nth-child(4){ left:44%; opacity:.6; animation-duration:2.05s; }
+  .u-mule-points .u-mule-point:nth-child(5){ left:50%; opacity:1; animation-duration:1.9s; }
+  .u-mule-points .u-mule-point:nth-child(6){ left:75%; opacity:.5; animation-duration:1.5s; animation-delay:1.5s; }
+  .u-mule-points .u-mule-point:nth-child(7){ left:88%; opacity:.9; animation-duration:2.2s; animation-delay:.2s; }
+  .u-mule-points .u-mule-point:nth-child(8){ left:58%; opacity:.8; animation-duration:2.25s; animation-delay:.2s; }
+  .u-mule-points .u-mule-point:nth-child(9){ left:98%; opacity:.6; animation-duration:2.6s; animation-delay:.1s; }
+  .u-mule-points .u-mule-point:nth-child(10){ left:65%; opacity:1; animation-duration:2.5s; animation-delay:.2s; }
+  .u-mule-content{ position:absolute; width:calc(100% - (var(--border) * 4)); height:calc(100% - (var(--border) * 4));
+    border-radius:calc(var(--rounded) - 4px); overflow:hidden; z-index:7; background-color:#191c29; }
+  @media(min-width:900px){ .u-mule{ --h-card:168px; } }
+  @media(max-width:899px) and (max-height:760px){ .u-mule{ --h-card:82px; } }
+  @media(max-width:899px) and (max-height:680px){ .u-mule{ --h-card:74px; } }
+
+  /* ── 3 · Magic card (JAE2Dev, smart-panda-78) ── */
+  .u-panda{ --background:linear-gradient(to right, #13b37f 0%, #11a3c8 100%);
+    width:96px; height:128px; padding:.9px; border-radius:.7rem; overflow:visible;
+    background:#f7ba2b; background:var(--background); position:relative; z-index:1; }
+  .u-panda::after{ position:absolute; content:""; top:-22px; left:0; right:0; z-index:-1;
+    height:100%; width:100%; transform:scale(.76); filter:blur(34.5px);
+    background:#f7ba2b; background:var(--background); transition:opacity .5s; }
+  .u-panda-info{ --color:#1f1a1d; background:var(--color); color:var(--color);
+    display:flex; justify-content:center; align-items:center; width:100%; height:100%;
+    overflow:visible; border-radius:.7rem; }
+  .u-panda .u-panda-title{ font-weight:300; letter-spacing:.2em; color:inherit; }
+  .u-panda:hover::after{ opacity:.6; padding:.7rem 0; top:18px; transition:.6s; }
+  .u-panda:hover .u-panda-info{ color:#fff9f9; transition:color 1s; }
+  @media(min-width:900px){ .u-panda{ width:128px; height:170px; } }
+  @media(max-width:899px) and (max-height:760px){ .u-panda{ width:84px; height:112px; } }
+  @media(max-width:899px) and (max-height:680px){ .u-panda{ width:76px; height:102px; } }
+
+  /* ── 4 · Explore button (code-town3, pink-goat-53) ── */
+  .u-goat-wrap{ position:relative; display:inline-block; padding:2px; border-radius:12px;
+    background:linear-gradient(90deg, #00c6ff, #845ec2, #ff6f91, #00c6ff); background-size:400% 400%;
+    animation:uGradientBorder 20s ease-in-out infinite; transition:all .4s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 0 20px rgba(0,0,0,.3); transform:translateZ(0); backface-visibility:hidden;
+    perspective:1000px; will-change:transform, filter; backdrop-filter:blur(5px); }
+  .u-goat-wrap:hover{ filter:brightness(1.1); box-shadow:0 0 25px rgba(0,0,0,.4), 0 0 10px rgba(66,135,245,.2);
+    backdrop-filter:blur(8px); animation:uGradientBorder 10s ease-in-out infinite; }
+  .u-goat-btn{ position:relative; padding:12px 30px; font-size:14px; color:#fff;
+    background:linear-gradient(45deg, #0f0f2d, #1a1a3a); border:none; border-radius:10px; cursor:pointer;
+    overflow:hidden; transition:all .4s cubic-bezier(.4,0,.2,1); font-family:'Rajdhani',sans-serif;
+    box-shadow:0 4px 10px rgba(10,10,31,.5), 0 0 10px rgba(66,135,245,.15), inset 0 0 10px rgba(66,135,245,.05);
+    text-transform:uppercase; letter-spacing:2px; z-index:1; transform:translateZ(0);
+    backface-visibility:hidden; perspective:1000px; will-change:transform;
+    text-shadow:0 0 10px rgba(255,255,255,.3), 0 0 20px rgba(255,255,255,.1); font-weight:700; }
+  .u-goat-btn span{ position:relative; z-index:5; font-weight:700;
+    background:linear-gradient(to right, #fff, #fff); -webkit-background-clip:text; background-clip:text;
+    filter:brightness(1.5) contrast(1.8);
+    text-shadow:0 0 15px rgba(255,255,255,.6), 0 0 30px rgba(255,255,255,.3); }
+  .u-goat-btn::before{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+    background:radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1.5px 1.5px at 85% 25%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1.5px 1.5px at 15% 75%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 50% 25%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1.5px 1.5px at 25% 50%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,.95), rgba(0,0,0,0));
+    animation:uParticles1 20s linear infinite; opacity:.45; pointer-events:none; will-change:transform; z-index:2; }
+  .u-goat-btn::after{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+    background:inherit; animation:uParticles2 18s linear infinite; transform:rotate(25deg);
+    opacity:.55; pointer-events:none; will-change:transform; z-index:3; }
+  .u-goat-btn:hover{ transform:translateY(-1px) translateZ(0);
+    box-shadow:0 6px 10px rgba(10,10,31,.6), 0 0 15px rgba(66,135,245,.3), inset 0 0 15px rgba(66,135,245,.1);
+    background:linear-gradient(45deg, #141436, #1e1e42); }
+  .u-goat-btn:hover span{ filter:brightness(1.8) contrast(2);
+    text-shadow:0 0 20px rgba(255,255,255,.8), 0 0 40px rgba(255,255,255,.4), 0 0 60px rgba(255,255,255,.2); }
+  .u-goat-btn:hover::before{ opacity:.65; }
+  .u-goat-btn:hover::after{ opacity:.75; }
+  .u-goat-btn:hover .u-goat-particles{ opacity:1; filter:blur(0); }
+  .u-goat-btn .u-goat-particles{ position:absolute; top:0; left:0; width:100%; height:100%;
+    background:radial-gradient(2px 2px at 15% 25%, rgba(255,255,255,1), rgba(0,0,0,0)),
+      radial-gradient(1.8px 1.8px at 85% 15%, rgba(255,255,255,.98), rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 75% 75%, rgba(255,255,255,1), rgba(0,0,0,0)),
+      radial-gradient(1.5px 1.5px at 25% 85%, rgba(255,255,255,.95), rgba(0,0,0,0)),
+      radial-gradient(2.2px 2.2px at 65% 35%, rgba(255,255,255,1), rgba(0,0,0,0));
+    animation:uParticles4 15s linear infinite; opacity:.85; mix-blend-mode:screen;
+    pointer-events:none; will-change:transform; z-index:4; filter:blur(.3px); }
+  @keyframes uParticles1{ 0%{transform:translate(0,0) rotate(0deg)} 20%{transform:translate(-25px,15px) rotate(90deg)}
+    40%{transform:translate(20px,-20px) rotate(180deg)} 60%{transform:translate(-15px,-25px) rotate(270deg)}
+    80%{transform:translate(25px,20px) rotate(320deg)} 100%{transform:translate(0,0) rotate(360deg)} }
+  @keyframes uParticles2{ 0%{transform:translate(0,0) rotate(20deg)} 25%{transform:translate(20px,-15px) rotate(110deg)}
+    50%{transform:translate(-20px,20px) rotate(200deg)} 75%{transform:translate(15px,15px) rotate(290deg)}
+    100%{transform:translate(0,0) rotate(380deg)} }
+  @keyframes uParticles4{ 0%{transform:translate(0,0) rotate(0deg)} 20%{transform:translate(-30px,20px) rotate(90deg)}
+    40%{transform:translate(25px,-25px) rotate(180deg)} 60%{transform:translate(-20px,-30px) rotate(270deg)}
+    80%{transform:translate(30px,25px) rotate(320deg)} 100%{transform:translate(0,0) rotate(360deg)} }
+  @keyframes uGradientBorder{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+  @media(min-width:900px){ .u-goat-btn{ padding:15px 40px; font-size:16px; } }
+
+  /* ── 5 · Wallet button, green text per TC (andrei0x309, clever-fish-45) ── */
+  .u-fish-btn{ max-width:320px; display:flex; padding:.5rem 1.4rem; font-size:.875rem; line-height:1.25rem;
+    font-weight:700; text-align:center; text-transform:uppercase; vertical-align:middle; align-items:center;
+    border-radius:.5rem; border:1px solid rgba(24,23,23,.25); gap:.75rem; color:#4ade80;
+    background-color:rgb(24,23,23); cursor:pointer; transition:all .6s ease; text-decoration:none;
+    font-family:'Rajdhani',sans-serif; letter-spacing:.06em; }
+  .u-fish-btn svg{ height:24px; width:24px; fill:#4ade80; margin-right:.5rem; flex:none; }
+  .u-fish-btn:hover{ transform:scale(1.02); background-color:#333; box-shadow:0 2px 4px rgba(0,0,0,.1); }
+  .u-fish-btn:focus{ outline:none; box-shadow:0 0 0 3px rgba(0,0,0,.3); }
+  .u-fish-btn:active{ transform:scale(.98); opacity:.8; }
 
   /* ── EFFECTS OFF / REDUCED MOTION ── */
   body.fx-off *, body.fx-off *::before, body.fx-off *::after{ animation-play-state:paused !important; }
@@ -575,17 +751,7 @@
         <span class="brand-sub">NEURO-COMMAND</span>
       </span>
     </a>
-    <div class="hud-meter">
-      <div class="meter-top">
-        <span class="lvl">LV <span id="levelNum">1</span> <span class="rank" id="rankName">RECRUIT</span></span>
-        <span class="xp"><span id="xpCounter">0</span> XP</span>
-      </div>
-      <div class="xpbar-track"><div id="xpBar" style="width:2%"></div></div>
-    </div>
     <div class="hud-actions">
-      <button id="soundToggle" type="button" class="icon-btn sound-btn" aria-pressed="false" aria-label="Sound is off. Turn sound on">
-        <span aria-hidden="true" style="font-size:1.05rem">♪</span><span class="lbl" aria-hidden="true">ON</span>
-      </button>
       <button id="settingsBtn" type="button" class="icon-btn" aria-label="Open system settings" aria-haspopup="dialog">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
@@ -598,180 +764,28 @@
 <main class="deck" id="deck" role="region" aria-roledescription="carousel" aria-label="MrTC Builds — swipe through the sections">
 
   <!-- 1 · HERO -->
-  <section class="slide acc-gold" id="top" data-title="Start here" data-accent="gold" aria-roledescription="slide" aria-label="1 of 10 — Start here">
+  <section class="slide acc-gold" id="top" data-title="Start here" data-accent="gold" aria-roledescription="slide" aria-label="1 of 4 — Start here">
     <div class="slide-scroll">
       <div class="slide-inner">
-        <span class="chip"><span class="eeg" aria-hidden="true"><span style="animation-delay:0s"></span><span style="animation-delay:.12s"></span><span style="animation-delay:.24s"></span><span style="animation-delay:.36s"></span><span style="animation-delay:.48s"></span></span> SYSTEM ONLINE — EXTERNAL EXECUTIVE FUNCTION</span>
         <h1 class="hero-title">STOP FEELING<br>SORRY FOR<br><span class="gold-text">YOURSELF.</span></h1>
         <p class="hero-body">Your brain is not broken. It's a <b style="color:#fff">spotlight, not a filing cabinet</b> — and it was never built to store, sort, and start everything alone. So we built it an external brain. <b style="color:var(--gold)">AI does the remembering. The sorting. The starting.</b> You do the living.</p>
         <p class="hero-note">THIS ISN'T PRODUCTIVITY COACHING. THIS IS A <b style="color:var(--pink)">WEAPON</b> AGAINST THE WALL OF AWFUL.</p>
         <div class="note-card">
-          <span class="note-label">AI WHISPER //</span>
           <span id="aiWhisperText" class="note-text whisper-caret">Stop feeling sorry for yourself. The tools finally exist.</span>
         </div>
         <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="chunker">PLAY LEVEL 1 ↓</button>
-          <button class="btn btn-ghost" type="button" data-goto="manifesto">READ THE MANIFESTO</button>
-        </div>
-        <div class="stat-row">
-          <span><b>0</b> HUSTLE CULTURE</span><span><b>0</b> SHAME</span><span><b>1</b> TINY FIRST STEP</span>
-        </div>
-        <div class="swipe-hint" aria-hidden="true"><span>SWIPE OR USE THE ARROWS</span><span class="arrow">→</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2 · THE CHUNKER -->
-  <section class="slide acc-purple" id="chunker" data-title="The Chunker" data-accent="purple" aria-roledescription="slide" aria-label="2 of 10 — The Chunker">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="chunker">
-          <div class="card edge chunker-lead acc-purple">
-            <div class="chunker-glow" aria-hidden="true"></div>
-            <div style="position:relative">
-              <div class="eyebrow" style="color:var(--pink)">LEVEL 1 // BOSS FIGHT</div>
-              <h2 class="chunker-title">THE <span class="gold-text">CHUNKER</span></h2>
-              <p class="chunker-sub">Name the thing that's crushing you. The machine breaks it into steps so small they feel stupid. <b style="color:#fff">Stupid-small is the point.</b></p>
-              <label class="sr-only" for="chunkerInput">What's the overwhelming task?</label>
-              <div class="field-row">
-                <input id="chunkerInput" class="field" type="text" maxlength="120" autocomplete="off" enterkeyhint="go" placeholder="e.g. Do my taxes / launch my website / clean this mess…">
-                <button id="chunkBtn" class="btn btn-gold" type="button">CHUNK IT ⚔</button>
-              </div>
-              <div class="try-row">
-                <span class="try-label">TRY:</span>
-                <button class="try-chip" type="button" data-task="Do my taxes">TAXES</button>
-                <button class="try-chip" type="button" data-task="Clear my inbox">INBOX ZERO</button>
-                <button class="try-chip" type="button" data-task="Launch my website">LAUNCH A SITE</button>
-                <button class="try-chip" type="button" data-task="Clean my apartment">CLEAN THE MESS</button>
-                <button class="try-chip" type="button" data-task="Write my essay">WRITE THE ESSAY</button>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="wall-head"><span>WALL OF AWFUL — INTEGRITY</span><span id="wallPct">100%</span></div>
-            <div class="wall-track"><div id="wallBar"></div></div>
-          </div>
-          <div id="questList">
-            <div class="quest-empty">⚠ NO ACTIVE QUEST —<br>TYPE THE THING YOU'VE BEEN AVOIDING. YES, THAT ONE.</div>
-          </div>
-          <div id="breachBanner" hidden>
-            <div class="breach-title">WALL OF AWFUL: BREACHED 🏆</div>
-            <p class="breach-sub">See that? The impossible thing was five small things wearing a trench coat. Now imagine a machine that does this for <em>every</em> task, every day.</p>
-            <button class="btn btn-gold btn-block" type="button" data-goto="classes" style="margin-top:.9rem">UNLOCK THE FULL SYSTEM →</button>
-          </div>
-          <div class="cta-row">
-            <button class="btn btn-ghost" type="button" data-goto="top">← BACK TO START</button>
-            <button class="btn btn-gold" type="button" data-next>NEXT SECTOR →</button>
-          </div>
+          <a href="https://news.mrtc.me/members-portal/" class="u-space-btn" style="text-decoration:none">
+            <strong>MEMBER PORTAL</strong>
+            <div class="u-space-stars-wrap"><div class="u-space-stars"></div></div>
+            <div class="u-space-glow"><div class="u-space-circle"></div><div class="u-space-circle"></div></div>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3 · SECTOR 01 -->
-  <section class="slide acc-orange idea" id="sector-1" data-title="01 · The Spark" data-accent="orange" aria-roledescription="slide" aria-label="3 of 10 — The Spark">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="idea-top">
-          <span class="idea-num" aria-hidden="true">01</span>
-          <span class="chip">THE SPARK</span>
-        </div>
-        <div class="eyebrow">SECTOR 01 // FRICTIONLESS INITIATION</div>
-        <h2>STARTING IS THE BOSS FIGHT</h2>
-        <p>We turn "do taxes" into "open browser, find one PDF." Steps so small your brain doesn't bother resisting.</p>
-        <div class="card edge"><p class="card-body">One tiny action is enough to get moving. If the first step still feels too big, make it smaller. Then smaller again.</p></div>
-        <div class="friction">ENEMY: THE WALL OF AWFUL</div>
-        <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="chunker">BREAK IT DOWN NOW ⚔</button>
-          <button class="btn btn-ghost" type="button" data-next>NEXT SECTOR →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 · SECTOR 02 -->
-  <section class="slide acc-cyan idea" id="sector-2" data-title="02 · The Brain Dump" data-accent="cyan" aria-roledescription="slide" aria-label="4 of 10 — The Brain Dump">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="idea-top">
-          <span class="idea-num" aria-hidden="true">02</span>
-          <span class="chip">THE BRAIN DUMP</span>
-        </div>
-        <div class="eyebrow">SECTOR 02 // COGNITIVE OFFLOADING</div>
-        <h2>47 OPEN LOOPS, ZERO STORAGE</h2>
-        <p>Voice-dump the chaos into AI and let it sort. Your head is for having ideas, not holding them.</p>
-        <div class="card edge"><p class="card-body">A page you'll actually reopen beats a perfect system you avoid. Keep the list short and ugly.</p></div>
-        <div class="friction">ENEMY: ANALYSIS PARALYSIS</div>
-        <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="chunker">DUMP IT INTO THE CHUNKER</button>
-          <button class="btn btn-ghost" type="button" data-next>NEXT SECTOR →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5 · SECTOR 03 -->
-  <section class="slide acc-pink idea" id="sector-3" data-title="03 · The Filter" data-accent="pink" aria-roledescription="slide" aria-label="5 of 10 — The Filter">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="idea-top">
-          <span class="idea-num" aria-hidden="true">03</span>
-          <span class="chip">THE FILTER</span>
-        </div>
-        <div class="eyebrow">SECTOR 03 // DECISION ELIMINATION</div>
-        <h2>EVERY TINY DECISION BURNS FUEL</h2>
-        <p>AI drafts the replies, plans the meals, does the research. You just approve. A draft is a starting point, not a decision.</p>
-        <div class="card edge"><p class="card-body">Edit it, cut it, or ignore it. Keeping your judgment in the loop is the whole trick.</p></div>
-        <div class="friction">ENEMY: DECISION FATIGUE</div>
-        <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="classes">SEE WHAT'S INCLUDED</button>
-          <button class="btn btn-ghost" type="button" data-next>NEXT SECTOR →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6 · SECTOR 04 -->
-  <section class="slide acc-emerald idea" id="sector-4" data-title="04 · The Co-Pilot" data-accent="emerald" aria-roledescription="slide" aria-label="6 of 10 — The Co-Pilot">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="idea-top">
-          <span class="idea-num" aria-hidden="true">04</span>
-          <span class="chip">THE CO-PILOT</span>
-        </div>
-        <div class="eyebrow">SECTOR 04 // BODY DOUBLING &amp; PACING</div>
-        <h2>PRESENT. PATIENT. ZERO JUDGMENT.</h2>
-        <p>A conversational co-pilot that sits with you, keeps you on the one task, and talks you off the rabbit holes.</p>
-        <div class="card edge"><p class="card-body">A pause is allowed. You can stop here and come back to it later — that's not failure, that's pacing.</p></div>
-        <div class="friction">ENEMY: THE SHAME SPIRAL</div>
-        <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="classes">PICK YOUR LEVEL</button>
-          <button class="btn btn-ghost" type="button" data-next>NEXT →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 · FOUR SECTORS / THE TRAP -->
-  <section class="slide acc-gold" id="trap" data-title="Four sectors" data-accent="gold" aria-roledescription="slide" aria-label="7 of 10 — Four sectors">
-    <div class="slide-scroll">
-      <div class="slide-inner">
-        <div class="eyebrow" style="color:var(--cyan)">SECTOR 02 // CAMPAIGN MAP</div>
-        <h2 class="hero-title" style="font-size:clamp(1.8rem,8.2vw,3.1rem)">FOUR SECTORS. <span class="gold-text">ONE BRAIN.</span></h2>
-        <p class="hero-body">Every system we build runs through four sectors. No 40-module courses. No prompt-engineering homework. Clear a sector, keep the weapon.</p>
-        <div class="card edge acc-pink">
-          <div class="trap-label">⚠ THE TRAP</div>
-          <p class="trap-p">People buy courses at 2 AM on a hyperfocus wave — then never open the login email, and wear the guilt for months. <b style="color:#fff">We are the antidote to that poison.</b> No course vault to rot. Systems that run, wins inside 15 minutes, and zero-guilt resets when life knocks you off track.</p>
-        </div>
-        <div class="cta-row">
-          <button class="btn btn-gold" type="button" data-goto="manifesto">THE MANIFESTO →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8 · MANIFESTO -->
-  <section class="slide acc-cyan" id="manifesto" data-title="Golden age" data-accent="cyan" aria-roledescription="slide" aria-label="8 of 10 — The manifesto">
+  <!-- 2 · MANIFESTO -->
+  <section class="slide acc-cyan" id="manifesto" data-title="Golden age" data-accent="cyan" aria-roledescription="slide" aria-label="2 of 4 — The manifesto">
     <div class="slide-scroll">
       <div class="slide-inner">
         <div class="eyebrow" style="color:var(--pink)">SECTOR 03 // THE MANIFESTO</div>
@@ -790,8 +804,8 @@
     </div>
   </section>
 
-  <!-- 9 · CLASSES -->
-  <section class="slide acc-gold" id="classes" data-title="Choose your class" data-accent="gold" aria-roledescription="slide" aria-label="9 of 10 — Choose your class">
+  <!-- 3 · CLASSES -->
+  <section class="slide acc-gold" id="classes" data-title="Choose your class" data-accent="gold" aria-roledescription="slide" aria-label="3 of 4 — Choose your class">
     <div class="slide-scroll">
       <div class="slide-inner">
         <div class="eyebrow" style="color:var(--cyan)">SECTOR 04 // CHARACTER SELECT</div>
@@ -800,7 +814,7 @@
         <div class="plans">
           <article class="card edge plan acc-cyan">
             <div class="plan-tag">CLASS I // RECRUIT</div>
-            <h3>STARTER</h3>
+            <h3>STARTER LAB</h3>
             <div class="price" style="color:var(--ink)">$0 <span class="per">/ FOREVER</span></div>
             <ul>
               <li>Google's free AI suite, wired the ADHD-friendly way</li>
@@ -813,10 +827,10 @@
           <article class="card edge plan acc-gold" style="background:linear-gradient(180deg,rgba(255,209,89,.09),rgba(245,184,46,.035));border-color:rgba(255,209,89,.45)">
             <div class="plan-badge">MOST DEPLOYED</div>
             <div class="plan-tag" style="color:var(--gold)">CLASS II // OPERATOR</div>
-            <h3>PRO</h3>
+            <h3>BUILDER'S CIRCLE</h3>
             <div class="price"><span class="gold-text">$17</span> <span class="per">/ MONTH</span></div>
             <ul>
-              <li>Everything in Starter</li>
+              <li>Everything in Starter Lab</li>
               <li>Muse + Hermes Agent — your AI chief of staff</li>
               <li>The full four-sector system library</li>
               <li>New builds dropped as they're forged</li>
@@ -826,10 +840,10 @@
           </article>
           <article class="card edge plan acc-purple stripes">
             <div class="plan-tag" style="color:#c084fc">CLASS III // ARCHITECT</div>
-            <h3>MASTER</h3>
+            <h3>MASTERMIND TRACK</h3>
             <div class="price">$47 <span class="per">/ MONTH</span></div>
             <ul>
-              <li>Everything in Pro</li>
+              <li>Everything in Builder's Circle</li>
               <li>Self-host your own stack: Ghost, n8n, Sim.ai, Paperclip on your own VPS</li>
               <li>Office hours — bring your build, get unstuck</li>
               <li><b style="color:#c084fc">Cohort-based.</b> Doors open a few times a year, capped seats</li>
@@ -842,8 +856,9 @@
     </div>
   </section>
 
-  <!-- 10 · FINAL -->
-  <section class="slide acc-gold" id="join" data-title="Join free" data-accent="gold" aria-roledescription="slide" aria-label="10 of 10 — Join free">
+
+  <!-- 4 · FINAL -->
+  <section class="slide acc-gold" id="join" data-title="Join free" data-accent="gold" aria-roledescription="slide" aria-label="4 of 4 — Join free">
     <div class="slide-scroll">
       <div class="slide-inner">
         <span class="chip" style="align-self:center"><span class="dot-pulse" aria-hidden="true"></span>ONE TINY FIRST STEP</span>
@@ -862,6 +877,7 @@
             <span style="font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:.13em;color:var(--ink)">MRTC <span class="gold-text">BUILDS</span></span>
           </div>
           <div>SUPPORT: <a href="mailto:sup@mrtc.me">sup@mrtc.me</a></div>
+          <div><a href="/privacy.html">PRIVACY POLICY</a> · <a href="/terms.html">TERMS OF SERVICE</a></div>
           <div>© 2026 MRTC BUILDS</div>
         </div>
       </div>
@@ -891,7 +907,7 @@
   <div class="dock-inner">
     <button class="nav-btn" id="prevBtn" type="button" aria-label="Previous section">←</button>
     <div class="dock-mid">
-      <div class="dock-meta"><span id="counter">01 / 10</span><span aria-hidden="true">·</span><span id="slideLabel" aria-live="polite">Start here</span></div>
+      <div class="dock-meta"><span id="counter">01 / 04</span><span aria-hidden="true">·</span><span id="slideLabel" aria-live="polite">Start here</span></div>
       <div class="dots" id="dotsWrap" role="group" aria-label="Choose a section"></div>
     </div>
     <button class="nav-btn" id="nextBtn" type="button" aria-label="Next section">→</button>
@@ -924,19 +940,11 @@
       <div class="setting-row">
         <div>
           <div class="setting-name">SOUND EFFECTS</div>
-          <div class="setting-help">Synth beeps, reward chords, warp whooshes — and the neuro drone underneath. Off = total silence.</div>
+          <div class="setting-help">Synth beeps, reward chords, warp whooshes. Off = total silence.</div>
         </div>
         <label class="switch" aria-label="Toggle sound effects">
           <input type="checkbox" id="setSfxToggle"><span class="track"></span>
         </label>
-      </div>
-      <div>
-        <div class="setting-row">
-          <div class="setting-name">NEURO DRONE VOLUME</div>
-          <div class="readout"><span id="droneVolReadout">35</span>%</div>
-        </div>
-        <input id="droneVolumeSlider" type="range" min="1" max="100" value="35" class="drone-range" aria-label="Neuro drone volume">
-        <div class="setting-help">40Hz gamma binaural drone — the same synth engine from the member portal, running underneath the whole site.</div>
       </div>
       <div class="setting-row">
         <div>
@@ -973,12 +981,11 @@
 
   /* ───────── SETTINGS (persisted) ───────── */
   const SETTINGS_KEY = 'mrtc-settings-v2';
-  const settings = { anim: !reduced, sfx: false, droneVol: 35, parallax: true, haptics: true };
+  const settings = { anim: !reduced, sfx: false, parallax: true, haptics: true };
   try {
     const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null');
     if (saved) {
       if (typeof saved.anim === 'boolean') settings.anim = saved.anim;
-      if (typeof saved.droneVol === 'number' && saved.droneVol >= 1 && saved.droneVol <= 100) settings.droneVol = saved.droneVol;
       if (typeof saved.parallax === 'boolean') settings.parallax = saved.parallax;
       if (typeof saved.haptics === 'boolean') settings.haptics = saved.haptics;
       // sound never auto-starts from storage — browsers block it and it startles people
@@ -1019,11 +1026,12 @@
   const levelOf = v => { let l = 0; THRESH.forEach((t,i) => { if (v >= t) l = i; }); return l; };
   function renderXP(){
     const l = levelOf(xp), base = THRESH[l], next = THRESH[l+1];
-    $('levelNum').textContent = l + 1;
-    $('xpCounter').textContent = xp;
-    $('rankName').textContent = RANKS[l];
+    const ln = $('levelNum'), xc = $('xpCounter'), rn = $('rankName'), xb = $('xpBar');
+    if (ln) ln.textContent = l + 1;
+    if (xc) xc.textContent = xp;
+    if (rn) rn.textContent = RANKS[l];
     const pct = next === undefined ? 100 : clamp(Math.round(((xp - base) / (next - base)) * 100), 2, 100);
-    $('xpBar').style.width = pct + '%';
+    if (xb) xb.style.width = pct + '%';
   }
   function gainXP(n){
     const before = levelOf(xp);
@@ -1035,7 +1043,9 @@
       toast('LEVEL UP', 'You are now LEVEL ' + (after + 1) + ' — ' + RANKS[after], '⬆');
       buzz([12,40,12]);
       const bar = $('xpBar');
-      bar.classList.remove('levelup-flash'); void bar.offsetWidth; bar.classList.add('levelup-flash');
+      if (bar){
+        bar.classList.remove('levelup-flash'); void bar.offsetWidth; bar.classList.add('levelup-flash');
+      }
     }
   }
 
@@ -1214,7 +1224,7 @@
   }
 
   /* ───────── AUDIO (silent until a real gesture turns it on) ───────── */
-  let audioEnabled = settings.sfx, audioCtx = null, activeDroneNodes = null, droneGainLevel = 0.035;
+  let audioEnabled = settings.sfx, audioCtx = null;
   function getAudioContext(){
     if (!audioCtx){
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -1257,33 +1267,6 @@
       osc.connect(gain); gain.connect(ctx.destination);
       osc.start(); osc.stop(ctx.currentTime + .28);
     } catch (e) {}
-  }
-  function startNeuroDrone(){
-    if (activeDroneNodes || !audioEnabled) return;
-    try {
-      const ctx = getAudioContext(); if (!ctx) return;
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(droneGainLevel, ctx.currentTime);
-      masterGain.connect(ctx.destination);
-      const osc1 = ctx.createOscillator(), osc2 = ctx.createOscillator();
-      osc1.type = 'sine'; osc2.type = 'sine';
-      osc1.frequency.setValueAtTime(200, ctx.currentTime);
-      osc2.frequency.setValueAtTime(240, ctx.currentTime);
-      osc1.connect(masterGain); osc2.connect(masterGain);
-      osc1.start(); osc2.start();
-      activeDroneNodes = { osc1, osc2, masterGain };
-    } catch (e) {}
-  }
-  function updateDroneVolume(val){
-    droneGainLevel = (val / 100) * 0.09;
-    if (activeDroneNodes && audioCtx)
-      activeDroneNodes.masterGain.gain.setValueAtTime(droneGainLevel, audioCtx.currentTime);
-  }
-  function stopAllDrones(){
-    if (activeDroneNodes){
-      try { activeDroneNodes.osc1.stop(); activeDroneNodes.osc2.stop(); activeDroneNodes.masterGain.disconnect(); } catch (e) {}
-      activeDroneNodes = null;
-    }
   }
 
   /* ───────── AI WHISPER typewriter ───────── */
@@ -1590,11 +1573,14 @@
     if (!chunked){ chunked = true; gainXP(25); toast('ACHIEVEMENT: FIRST CHUNK', (tpl ? tpl.name : 'OPERATION: CUSTOM QUEST') + ' generated. +25 XP', '🎯'); }
     else toast('NEW QUEST', (tpl ? tpl.name : 'OPERATION: CUSTOM QUEST') + ' generated.', '🎯');
   }
-  $('chunkBtn').addEventListener('click', runChunk);
-  $('chunkerInput').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); runChunk(); } });
+  const _chunkBtn = $('chunkBtn'), _chunkIn = $('chunkerInput');
+  if (_chunkBtn) _chunkBtn.addEventListener('click', runChunk);
+  if (_chunkIn) _chunkIn.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); runChunk(); } });
   document.querySelectorAll('.try-chip').forEach(chip => chip.addEventListener('click', () => {
-    $('chunkerInput').value = chip.getAttribute('data-task');
-    runChunk();
+    if (_chunkIn){
+      _chunkIn.value = chip.getAttribute('data-task');
+      runChunk();
+    }
   }));
 
   /* ───────── CONFETTI ───────── */
@@ -1636,29 +1622,28 @@
   $('settingsBackdrop').addEventListener('click', closeSettings);
 
   const animToggle = $('setAnimToggle'), sfxToggle = $('setSfxToggle'),
-        volSlider = $('droneVolumeSlider'), volReadout = $('droneVolReadout'),
         tiltToggle = $('setTiltToggle'), hapticToggle = $('setHapticToggle'),
         soundToggle = $('soundToggle');
 
   function syncToggles(){
-    animToggle.checked = settings.anim;
-    sfxToggle.checked = settings.sfx;
-    tiltToggle.checked = settings.parallax;
-    hapticToggle.checked = settings.haptics;
-    volReadout.textContent = settings.droneVol;
-    volSlider.value = settings.droneVol;
-    volSlider.disabled = !settings.sfx;
+    if (animToggle) animToggle.checked = settings.anim;
+    if (sfxToggle) sfxToggle.checked = settings.sfx;
+    if (tiltToggle) tiltToggle.checked = settings.parallax;
+    if (hapticToggle) hapticToggle.checked = settings.haptics;
     const on = settings.sfx;
-    soundToggle.setAttribute('aria-pressed', String(on));
-    soundToggle.setAttribute('aria-label', on ? 'Sound is on. Turn sound off' : 'Sound is off. Turn sound on');
-    const lbl = soundToggle.querySelector('.lbl');
-    if (lbl) lbl.textContent = on ? 'OFF' : 'ON';
+    if (soundToggle){
+      soundToggle.setAttribute('aria-pressed', String(on));
+      soundToggle.setAttribute('aria-label', on ? 'Sound is on. Turn sound off' : 'Sound is off. Turn sound on');
+      const lbl = soundToggle.querySelector('.lbl');
+      if (lbl) lbl.textContent = on ? 'OFF' : 'ON';
+    }
   }
   function setSoundEnabled(enabled){
     settings.sfx = enabled; audioEnabled = enabled;
     saveSettings();
-    if (enabled){ const ctx = getAudioContext(); if (ctx) startNeuroDrone(); }
-    else { stopAllDrones(); if (audioCtx && audioCtx.state === 'running') audioCtx.suspend(); }
+    if (!enabled && audioCtx && audioCtx.state === 'running'){
+      audioCtx.suspend();
+    }
     syncToggles();
   }
   function applyAnim(){
@@ -1667,13 +1652,8 @@
     else { stopNet(true); stopWhisper(); wEl.textContent = LINES[wLine]; }
   }
   animToggle.addEventListener('change', () => { settings.anim = animToggle.checked; saveSettings(); applyAnim(); });
-  soundToggle.addEventListener('click', () => { setSoundEnabled(!settings.sfx); buzz(8); });
+  if (soundToggle) soundToggle.addEventListener('click', () => { setSoundEnabled(!settings.sfx); buzz(8); });
   sfxToggle.addEventListener('change', () => setSoundEnabled(sfxToggle.checked));
-  volSlider.addEventListener('input', () => {
-    settings.droneVol = Number(volSlider.value);
-    volReadout.textContent = volSlider.value;
-    saveSettings(); updateDroneVolume(settings.droneVol);
-  });
   tiltToggle.addEventListener('change', () => {
     settings.parallax = tiltToggle.checked; saveSettings();
     if (settings.parallax) enableTilt(true);
@@ -1684,7 +1664,6 @@
     settings.haptics = hapticToggle.checked; saveSettings();
     if (settings.haptics) buzz(14);
   });
-  updateDroneVolume(settings.droneVol);
   syncToggles();
 
   /* ───────── INIT ───────── */
@@ -1714,7 +1693,7 @@
   function unlockAudio(){
     if (audioUnlocked) return;
     audioUnlocked = true;
-    if (settings.sfx){ const ctx = getAudioContext(); if (ctx) startNeuroDrone(); }
+    if (settings.sfx){ getAudioContext(); }
   }
   window.addEventListener('pointerdown', unlockAudio, { passive: true });
   window.addEventListener('keydown', unlockAudio);
@@ -1722,6 +1701,45 @@
   document.querySelectorAll('.btn, .nav-btn, .dot, .icon-btn, .try-chip').forEach(el => {
     el.addEventListener('click', () => playSynthBeep(560, 'sine', .08, .03));
   });
+})();
+</script>
+<script>
+(function(f,n) { n = document.createElement('script'); n.src = 'https://fcdn.answerly.io/fn.js'; n.setAttribute('data-companyId', f); document.getElementsByTagName('html')[0].insertAdjacentElement('beforeend', n); })('3c4bb44a-bf4b-47c5-afb4-06ad06033638');</script>
+<script>
+(function(){
+  var styleId = 'mrtc-answerly-shadow-fix';
+  var css = '[shadow="spotlight"] .h, [shadow="spotlight"] .ci { box-shadow: none !important; }' +
+            'html, body { background: transparent !important; }';
+  function patchFrame(frame) {
+    function install() {
+      // no white card behind the video: let the page show through
+      frame.style.colorScheme = 'dark';
+      frame.style.background = 'transparent';
+      frame.style.boxShadow = 'none';
+      try {
+        var doc = frame.contentDocument;
+        if (!doc || !doc.documentElement || doc.getElementById(styleId)) return;
+        var style = doc.createElement('style');
+        style.id = styleId;
+        style.textContent = css;
+        (doc.head || doc.documentElement).appendChild(style);
+      } catch (_) {}
+    }
+    frame.addEventListener('load', install);
+    install();
+  }
+  var observer;
+  function findWidget() {
+    var frames = document.querySelectorAll('iframe.cf[title="Widget"]');
+    if (!frames.length) return false;
+    frames.forEach(patchFrame);
+    if (observer) observer.disconnect();
+    return true;
+  }
+  if (!findWidget()) {
+    observer = new MutationObserver(findWidget);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
 })();
 </script>
 </body>
